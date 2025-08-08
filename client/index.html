@@ -3,7 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BudgetBuddy</title>
+    <title>BudgetBuddy - Track Your Expenses</title>
+    <meta name="description" content="A modern expense tracking web application with dark mode, currency support, and beautiful UI" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    <link rel="preload" href="/src/styles.css" as="style" />
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
   </head>
   <body>
     <div id="root"></div>
