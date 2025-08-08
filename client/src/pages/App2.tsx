@@ -6,8 +6,6 @@ import ThemeToggle from '../components/ThemeToggle';
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
-import ForgotPassword from './ForgotPassword';
-import ResetPassword from './ResetPassword';
 
 function useAuth() {
   const token = localStorage.getItem('token');
@@ -73,8 +71,6 @@ export default function App() {
                 <Route path="/" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
               </Routes>
             </div>
           </main>

@@ -40,10 +40,10 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">Email Address</label>
               <input 
                 type="email"
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 backdrop-blur-sm" 
+                className="w-full px-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm text-slate-800 dark:text-slate-100" 
                 placeholder="Enter your email" 
                 value={email} 
                 onChange={e => setEmail(e.target.value)}
@@ -52,10 +52,18 @@ export default function Login() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Password</label>
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Password</label>
+                <Link 
+                  to="/forgot-password" 
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors duration-200"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <input 
                 type="password" 
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 backdrop-blur-sm" 
+                className="w-full px-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm text-slate-800 dark:text-slate-100" 
                 placeholder="Enter your password" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)}
