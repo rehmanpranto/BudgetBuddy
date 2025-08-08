@@ -8,9 +8,11 @@ import Register from './Register';
 import Dashboard from './Dashboard';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+import Test from './Test';
 
 function useAuth() {
   const token = localStorage.getItem('token');
+  console.log('Auth check - token exists:', !!token); // Debug log
   return { isAuthed: !!token };
 }
 
@@ -70,9 +72,10 @@ export default function App() {
           <main className="relative z-10 max-w-7xl mx-auto p-6">
             <div className="slide-up">
               <Routes>
+                <Route path="/test" element={<Test />} />
                 <Route path="/" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={isAuthed ? <Navigate to="/" replace /> : <Login />} />
+                <Route path="/register" element={isAuthed ? <Navigate to="/" replace /> : <Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
               </Routes>
