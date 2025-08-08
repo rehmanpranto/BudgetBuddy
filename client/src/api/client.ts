@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api';
+// Use Vercel serverless functions in production, local server in development
+const API_BASE = import.meta.env.VITE_API_BASE || 
+  (import.meta.env.PROD ? '/api' : 'http://localhost:4000/api');
 
 export const api = axios.create({ baseURL: API_BASE });
 
