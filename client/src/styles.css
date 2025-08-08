@@ -65,6 +65,18 @@ body {
 .glass {
   @apply bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl shadow-slate-200/30;
   @apply dark:bg-slate-900/80 dark:border-slate-700/30 dark:shadow-slate-900/50;
+  /* Enhanced glass effect for mobile */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* Custom animations */
@@ -389,6 +401,53 @@ html {
   
   nav .text-2xl {
     font-size: 1.3rem !important;
+  }
+}
+
+/* Extra small screen breakpoint (xs) */
+@media (min-width: 320px) {
+  .xs\\:block {
+    display: block !important;
+  }
+  
+  .xs\\:hidden {
+    display: none !important;
+  }
+}
+
+/* Enhanced mobile navigation */
+@media (max-width: 640px) {
+  /* Mobile navigation adjustments */
+  nav {
+    padding: 0.5rem 0;
+  }
+  
+  nav .w-full {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Ensure buttons don't overflow */
+  nav .flex {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  
+  /* Currency selector mobile optimization */
+  .currency-selector {
+    max-width: 80px;
+    font-size: 0.75rem;
+  }
+  
+  /* Mobile logout button */
+  .logout-mobile {
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

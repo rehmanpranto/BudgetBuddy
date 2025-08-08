@@ -36,37 +36,51 @@ export default function App() {
             <div className="absolute top-1/2 left-3/4 w-24 h-24 sm:w-48 sm:h-48 bg-purple-200/25 dark:bg-purple-800/20 rounded-full blur-3xl float" style={{animationDelay: '2s'}}></div>
           </div>
 
-          <nav className="relative z-10 glass sticky top-0 border-b border-white/30 dark:border-slate-700/30 w-full">
-            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-lg shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-200">
+          <nav className="relative z-10 glass sticky top-0 border-b border-white/30 dark:border-slate-700/30 w-full backdrop-blur-xl bg-white/70 dark:bg-slate-900/70">
+            <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
+              <Link to="/" className="flex items-center space-x-2 group flex-shrink-0">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-xs sm:text-lg shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-200">
                   💰
                 </div>
-                <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent hidden xs:block">
                   BudgetBuddy
                 </span>
+                <span className="text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent block xs:hidden">
+                  BB
+                </span>
               </Link>
-              <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="flex items-center space-x-1 sm:space-x-4 flex-shrink-0">
                 <ThemeToggle />
-                {isAuthed && <CurrencySelector />}
+                {isAuthed && (
+                  <div className="hidden xs:block">
+                    <CurrencySelector />
+                  </div>
+                )}
                 {isAuthed ? (
-                  <button 
-                    onClick={() => { localStorage.removeItem('token'); location.href = '/login'; }} 
-                    className="px-3 py-2 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-xl font-medium btn-hover shadow-lg shadow-blue-500/25 text-sm sm:text-base"
-                  >
-                    Logout
-                  </button>
+                  <>
+                    {/* Mobile currency selector */}
+                    <div className="block xs:hidden">
+                      <CurrencySelector />
+                    </div>
+                    <button 
+                      onClick={() => { localStorage.removeItem('token'); location.href = '/login'; }} 
+                      className="px-2 py-1.5 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-lg sm:rounded-xl font-medium text-xs sm:text-base shadow-lg shadow-blue-500/25 transition-all duration-200 hover:shadow-blue-500/40"
+                    >
+                      <span className="hidden sm:inline">Logout</span>
+                      <span className="sm:hidden">⚈</span>
+                    </button>
+                  </>
                 ) : (
-                  <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="flex items-center space-x-1 sm:space-x-3">
                     <Link 
                       to="/login" 
-                      className="px-3 py-2 sm:px-6 sm:py-2.5 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm sm:text-base"
+                      className="px-2 py-1.5 sm:px-6 sm:py-2.5 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-xs sm:text-base"
                     >
                       Login
                     </Link>
                     <Link 
                       to="/register" 
-                      className="px-3 py-2 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-xl font-medium btn-hover shadow-lg shadow-blue-500/25 text-sm sm:text-base"
+                      className="px-2 py-1.5 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-lg sm:rounded-xl font-medium shadow-lg shadow-blue-500/25 text-xs sm:text-base transition-all duration-200 hover:shadow-blue-500/40"
                     >
                       Sign Up
                     </Link>

@@ -20,13 +20,13 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2.5 rounded-xl glass transition-all duration-200 hover:shadow-lg group relative"
+      className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl glass transition-all duration-200 hover:shadow-lg group relative"
       title={getTooltip()}
     >
-      <div className="relative w-6 h-6 flex items-center justify-center">
+      <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
         {/* System indicator dot */}
         {theme === 'system' && (
-          <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse shadow-lg"></div>
+          <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse shadow-lg"></div>
         )}
         
         {/* Sun Icon */}
