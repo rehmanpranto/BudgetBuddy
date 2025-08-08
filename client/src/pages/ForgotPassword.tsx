@@ -124,6 +124,15 @@ export default function ForgotPassword() {
             </div>
           </form>
         </div>
+        
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-slate-500 dark:text-slate-400 text-sm flex items-center justify-center space-x-1">
+            <span>Developed with</span>
+            <span className="text-red-500 animate-pulse">❤️</span>
+            <span>by BudgetBuddy Team</span>
+          </p>
+        </div>
       </div>
     </div>
   );

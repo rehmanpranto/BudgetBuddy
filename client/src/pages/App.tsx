@@ -36,17 +36,14 @@ export default function App() {
             <div className="absolute top-1/2 left-3/4 w-24 h-24 sm:w-48 sm:h-48 bg-purple-200/25 dark:bg-purple-800/20 rounded-full blur-3xl float" style={{animationDelay: '2s'}}></div>
           </div>
 
-          <nav className="relative z-10 glass sticky top-0 border-b border-white/30 dark:border-slate-700/30 w-full backdrop-blur-xl bg-white/70 dark:bg-slate-900/70">
+          <nav className="relative z-10 glass-nav sticky top-0 border-b border-white/30 dark:border-slate-700/30 w-full backdrop-blur-xl bg-white/70 dark:bg-slate-900/70">
             <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
               <Link to="/" className="flex items-center space-x-2 group flex-shrink-0">
                 <div className="w-7 h-7 sm:w-10 sm:h-10 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-xs sm:text-lg shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-200">
                   💰
                 </div>
-                <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent hidden xs:block">
+                <span className="text-sm sm:text-lg lg:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   BudgetBuddy
-                </span>
-                <span className="text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent block xs:hidden">
-                  BB
                 </span>
               </Link>
               <div className="flex items-center space-x-1 sm:space-x-4 flex-shrink-0">

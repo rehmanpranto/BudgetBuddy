@@ -171,7 +171,7 @@ export default function Dashboard() {
 
       {/* Charts Section */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
-        <div className="glass rounded-3xl p-4 sm:p-8 card-hover">
+        <div className="glass-card p-4 sm:p-8 card-hover">
           <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-xs sm:text-sm mr-2 sm:mr-3">📈</span>
             Expenses by Category
@@ -198,7 +198,7 @@ export default function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="glass rounded-3xl p-4 sm:p-8 card-hover">
+        <div className="glass-card p-4 sm:p-8 card-hover">
           <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center text-white text-xs sm:text-sm mr-2 sm:mr-3">📊</span>
             Monthly Trends
@@ -219,7 +219,7 @@ export default function Dashboard() {
       {/* Transactions and Form Section */}
       <section className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-8">
         {/* Recent Transactions */}
-        <div className="xl:col-span-2 glass rounded-3xl p-4 sm:p-8 card-hover">
+        <div className="xl:col-span-2 glass-card p-4 sm:p-8 card-hover">
           <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-white text-xs sm:text-sm mr-2 sm:mr-3">📋</span>
             Recent Transactions
@@ -279,7 +279,7 @@ export default function Dashboard() {
           {/* Mobile Cards */}
           <div className="sm:hidden space-y-3">
             {recent.map(t => (
-              <div key={t.id} className="bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-2">
+              <div key={t.id} className="glass rounded-xl p-4 space-y-2 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all duration-200">
                 <div className="flex items-center justify-between">
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
                     t.type === 'income' 
@@ -318,7 +318,7 @@ export default function Dashboard() {
         </div>
 
         {/* Add/Edit Form */}
-        <div className="glass rounded-3xl p-4 sm:p-8 card-hover">
+        <div className="glass-card p-4 sm:p-8 card-hover">
           <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg flex items-center justify-center text-white text-xs sm:text-sm mr-2 sm:mr-3">➕</span>
             {form.id ? 'Edit Transaction' : 'Add Transaction'}
@@ -331,7 +331,7 @@ export default function Dashboard() {
                 <select 
                   value={form.type} 
                   onChange={e => setForm(f => ({ ...f, type: e.target.value as any }))} 
-                  className="w-full px-3 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-100"
+                  className="w-full px-3 py-3 glass rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-slate-800 dark:text-slate-100"
                 >
                   <option value="expense">💸 Expense</option>
                   <option value="income">💰 Income</option>
@@ -347,7 +347,7 @@ export default function Dashboard() {
                   value={form.amount} 
                   onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} 
                   placeholder="0.00" 
-                  className="w-full px-3 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-100"
+                  className="w-full px-3 py-3 glass rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-slate-800 dark:text-slate-100"
                   required
                 />
               </div>
@@ -358,7 +358,7 @@ export default function Dashboard() {
               <select 
                 value={form.category} 
                 onChange={e => setForm(f => ({ ...f, category: e.target.value }))} 
-                className="w-full px-3 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-100"
+                className="w-full px-3 py-3 glass rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-slate-800 dark:text-slate-100"
               >
                 {['Food','Transport','Rent','Salary','Shopping','Health','Entertainment','Education','Other'].map(c => 
                   <option key={c} value={c}>{c}</option>
@@ -372,7 +372,7 @@ export default function Dashboard() {
                 type="date" 
                 value={form.date} 
                 onChange={e => setForm(f => ({ ...f, date: e.target.value }))} 
-                className="w-full px-3 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-100"
+                className="w-full px-3 py-3 glass rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-slate-800 dark:text-slate-100"
                 required
               />
             </div>
@@ -383,7 +383,7 @@ export default function Dashboard() {
                 value={form.note || ''} 
                 onChange={e => setForm(f => ({ ...f, note: e.target.value }))} 
                 placeholder="Add a note..." 
-                className="w-full px-3 py-3 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                className="w-full px-3 py-3 glass rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
             </div>
 
