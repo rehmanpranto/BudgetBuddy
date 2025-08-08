@@ -8,6 +8,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import SimpleDashboard from './SimpleDashboard';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import Test from './Test';
@@ -15,6 +16,10 @@ import Test from './Test';
 function useAuth() {
   const token = localStorage.getItem('token');
   console.log('Auth check - token exists:', !!token); // Debug log
+  console.log('Current URL:', window.location.href); // Debug log
+  if (token) {
+    console.log('Token preview:', token.substring(0, 20) + '...');
+  }
   return { isAuthed: !!token };
 }
 
@@ -75,7 +80,8 @@ export default function App() {
             <div className="slide-up">
               <Routes>
                 <Route path="/test" element={<Test />} />
-                <Route path="/" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />
+                <Route path="/" element={isAuthed ? <SimpleDashboard /> : <Navigate to="/login" replace />} />
+                <Route path="/dashboard" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />
                 <Route path="/login" element={isAuthed ? <Navigate to="/" replace /> : <Login />} />
                 <Route path="/register" element={isAuthed ? <Navigate to="/" replace /> : <Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />

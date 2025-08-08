@@ -14,10 +14,14 @@ export default function Login() {
     setError(null);
     setLoading(true);
     try {
+      console.log('Attempting login with:', { email, password: '***' });
       const { data } = await api.post('/login', { email, password });
+      console.log('Login response:', data);
       localStorage.setItem('token', data.token);
+      console.log('Token saved, navigating to dashboard...');
       nav('/');
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err?.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
