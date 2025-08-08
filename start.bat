@@ -1,0 +1,3 @@
+@echo off
+echo Starting BudgetBuddy - Server and Client together...
+npm run dev

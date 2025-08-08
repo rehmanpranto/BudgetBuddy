@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body { 
+  @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-slate-800 min-h-screen;
+  @apply dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:text-slate-100;
+}
+
+/* Enhanced text colors for dark mode */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  @apply text-slate-50;
+}
+
+.dark p, .dark span, .dark div {
+  @apply text-slate-200;
+}
+
+.dark .text-slate-600 {
+  @apply dark:text-slate-300;
+}
+
+.dark .text-slate-700 {
+  @apply dark:text-slate-200;
+}
+
+.dark .text-slate-800 {
+  @apply dark:text-slate-100;
+}
+
+/* Custom gradient backgrounds */
+.gradient-card {
+  @apply bg-gradient-to-br from-white to-slate-50 backdrop-blur-sm border border-white/50 shadow-xl shadow-slate-200/50;
+  @apply dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-900 dark:border-slate-700/50 dark:shadow-slate-900/50;
+}
+
+.gradient-primary {
+  @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700;
+}
+
+.gradient-success {
+  @apply bg-gradient-to-r from-emerald-500 to-teal-500;
+}
+
+.gradient-danger {
+  @apply bg-gradient-to-r from-rose-500 to-pink-500;
+}
+
+.gradient-warning {
+  @apply bg-gradient-to-r from-amber-500 to-orange-500;
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl shadow-slate-200/30;
+  @apply dark:bg-slate-900/80 dark:border-slate-700/30 dark:shadow-slate-900/50;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Input focus effects */
+input:focus, select:focus {
+  @apply ring-2 ring-blue-500/20 border-blue-400;
+}
+
+/* Button hover effects */
+.btn-hover {
+  @apply transition-all duration-200 transform hover:scale-105 hover:shadow-lg active:scale-95;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-1;
+}
