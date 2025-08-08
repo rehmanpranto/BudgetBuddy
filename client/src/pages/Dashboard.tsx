@@ -20,10 +20,19 @@ export default function Dashboard() {
   const [error, setError] = useState<string | null>(null);
 
   async function load() {
-    const { data: list } = await api.get('/transactions', { params: filter });
-    const { data: sum } = await api.get('/summary');
-    setTxs(list);
-    setSummary(sum);
+    try {
+      const { data: list } = await api.get('/transactions', { params: filter });
+      const { data: sum } = await api.get('/summary');
+      setTxs(list);
+      setSummary(sum);
+      setError(null);
+    } catch (err: any) {
+      console.error('Failed to load dashboard data:', err);
+      setError(err?.response?.data?.message || 'Failed to load data. Please try again.');
+      // Set empty data as fallback
+      setTxs([]);
+      setSummary({ income: 0, expenses: 0, balance: 0 });
+    }
   }
 
   useEffect(() => { load(); }, [JSON.stringify(filter)]);

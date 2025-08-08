@@ -80,8 +80,7 @@ export default function App() {
             <div className="slide-up">
               <Routes>
                 <Route path="/test" element={<Test />} />
-                <Route path="/" element={isAuthed ? <SimpleDashboard /> : <Navigate to="/login" replace />} />
-                <Route path="/dashboard" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />
+                <Route path="/" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />
                 <Route path="/login" element={isAuthed ? <Navigate to="/" replace /> : <Login />} />
                 <Route path="/register" element={isAuthed ? <Navigate to="/" replace /> : <Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
