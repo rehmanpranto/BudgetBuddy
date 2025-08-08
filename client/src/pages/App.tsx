@@ -37,36 +37,36 @@ export default function App() {
           </div>
 
           <nav className="relative z-10 glass sticky top-0 border-b border-white/30 dark:border-slate-700/30">
-            <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+              <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 gradient-primary rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-lg shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-200">
                   💰
                 </div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   BudgetBuddy
                 </span>
               </Link>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 <ThemeToggle />
                 {isAuthed && <CurrencySelector />}
                 {isAuthed ? (
                   <button 
                     onClick={() => { localStorage.removeItem('token'); location.href = '/login'; }} 
-                    className="px-6 py-2.5 gradient-primary text-white rounded-xl font-medium btn-hover shadow-lg shadow-blue-500/25"
+                    className="px-3 py-2 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-xl font-medium btn-hover shadow-lg shadow-blue-500/25 text-sm sm:text-base"
                   >
                     Logout
                   </button>
                 ) : (
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <Link 
                       to="/login" 
-                      className="px-6 py-2.5 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors duration-200"
+                      className="px-3 py-2 sm:px-6 sm:py-2.5 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm sm:text-base"
                     >
                       Login
                     </Link>
                     <Link 
                       to="/register" 
-                      className="px-6 py-2.5 gradient-primary text-white rounded-xl font-medium btn-hover shadow-lg shadow-blue-500/25"
+                      className="px-3 py-2 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-xl font-medium btn-hover shadow-lg shadow-blue-500/25 text-sm sm:text-base"
                     >
                       Sign Up
                     </Link>
@@ -76,8 +76,8 @@ export default function App() {
             </div>
           </nav>
 
-          <main className="relative z-10 max-w-7xl mx-auto p-6">
-            <div className="slide-up">
+          <main className="relative z-10 max-w-7xl mx-auto p-4 sm:p-6">
+            <div className="slide-up fade-in">
               <Routes>
                 <Route path="/test" element={<Test />} />
                 <Route path="/" element={isAuthed ? <Dashboard /> : <Navigate to="/login" replace />} />

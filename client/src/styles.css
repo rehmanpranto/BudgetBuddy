@@ -112,3 +112,129 @@ input:focus, select:focus {
 .card-hover {
   @apply transition-all duration-300 hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-1;
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .glass {
+    @apply p-4;
+  }
+  
+  .card-hover:hover {
+    @apply transform-none shadow-lg;
+  }
+  
+  .btn-hover:hover {
+    @apply transform-none;
+  }
+}
+
+/* Loading states */
+.skeleton {
+  @apply bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700;
+  animation: skeleton 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.skeleton {
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+}
+
+/* Smooth loading animations */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Mobile table optimizations */
+@media (max-width: 640px) {
+  .mobile-table {
+    @apply block;
+  }
+  
+  .mobile-table thead,
+  .mobile-table tbody,
+  .mobile-table th,
+  .mobile-table td,
+  .mobile-table tr {
+    @apply block;
+  }
+  
+  .mobile-table thead tr {
+    @apply sr-only;
+  }
+  
+  .mobile-table tr {
+    @apply border border-slate-200 dark:border-slate-700 mb-4 rounded-xl p-4 bg-white/50 dark:bg-slate-800/50;
+  }
+  
+  .mobile-table td {
+    @apply border-none pb-2 pl-6 relative;
+  }
+  
+  .mobile-table td:before {
+    @apply absolute left-0 top-0 font-semibold text-slate-600 dark:text-slate-300 text-sm;
+    content: attr(data-label) ": ";
+  }
+}
+
+/* Touch-friendly buttons */
+@media (max-width: 768px) {
+  button {
+    @apply min-h-[44px];
+  }
+  
+  input, select {
+    @apply min-h-[44px];
+  }
+}
+
+/* Performance optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input, textarea, [contenteditable] {
+  -webkit-user-select: auto;
+  -khtml-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
+}
+
+/* Optimize scrolling performance */
+.overflow-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

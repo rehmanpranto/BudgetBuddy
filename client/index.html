@@ -2,9 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>BudgetBuddy - Track Your Expenses</title>
     <meta name="description" content="A modern expense tracking web application with dark mode, currency support, and beautiful UI" />
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="BudgetBuddy" />
     
     <!-- Preload critical resources -->
     <link rel="preload" href="/src/main.tsx" as="script" />
@@ -12,6 +19,18 @@
     
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    
+    <!-- Prevent zooming on form inputs on iOS -->
+    <style>
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+      @media screen and (max-width: 768px) {
+        input:focus, select:focus, textarea:focus {
+          zoom: 1;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
