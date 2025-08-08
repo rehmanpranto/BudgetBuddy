@@ -1,4 +1,6 @@
 import { Route, Routes, Navigate, Link } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { CurrencyProvider } from '../contexts/CurrencyContext';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import CurrencySelector from '../components/CurrencySelector';
@@ -82,6 +84,8 @@ export default function App() {
             </div>
           </main>
         </div>
+        <Analytics />
+        <SpeedInsights />
       </CurrencyProvider>
     </ThemeProvider>
   );
