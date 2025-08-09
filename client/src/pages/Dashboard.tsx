@@ -21,6 +21,7 @@ export default function Dashboard() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function load() {
     try {
@@ -67,8 +68,37 @@ export default function Dashboard() {
 
   async function remove(id: string) {
     if (confirm('Are you sure you want to delete this transaction?')) {
-      await api.delete(`/transactions/${id}`);
-      await load();
+      try {
+        setError(null);
+        setDeletingId(id);
+        console.log('Deleting transaction:', id);
+        
+        const response = await api.delete(`/transactions/${id}`);
+        console.log('Delete response:', response);
+        
+        await load();
+        console.log('Transaction deleted successfully');
+      } catch (err: any) {
+        console.error('Delete error:', err);
+        console.error('Error response:', err?.response);
+        console.error('Error status:', err?.response?.status);
+        console.error('Error data:', err?.response?.data);
+        
+        let errorMessage = 'Failed to delete transaction. Please try again.';
+        if (err?.response?.status === 401) {
+          errorMessage = 'Authentication failed. Please log in again.';
+        } else if (err?.response?.status === 404) {
+          errorMessage = 'Transaction not found. It may have been already deleted.';
+        } else if (err?.response?.status === 403) {
+          errorMessage = 'You do not have permission to delete this transaction.';
+        } else if (err?.response?.data?.message) {
+          errorMessage = err.response.data.message;
+        }
+        
+        setError(errorMessage);
+      } finally {
+        setDeletingId(null);
+      }
     }
   }
 
@@ -259,14 +289,20 @@ export default function Dashboard() {
                         <button 
                           onClick={() => edit(t)} 
                           className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium transition-colors duration-200"
+                          disabled={deletingId === t.id}
                         >
                           Edit
                         </button>
                         <button 
                           onClick={() => remove(t.id)} 
-                          className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm font-medium transition-colors duration-200"
+                          disabled={deletingId === t.id}
+                          className={`text-sm font-medium transition-colors duration-200 ${
+                            deletingId === t.id 
+                              ? 'text-slate-400 cursor-not-allowed' 
+                              : 'text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300'
+                          }`}
                         >
-                          Delete
+                          {deletingId === t.id ? 'Deleting...' : 'Delete'}
                         </button>
                       </div>
                     </td>
@@ -300,15 +336,32 @@ export default function Dashboard() {
                   <div className="flex flex-col space-y-1">
                     <button 
                       onClick={() => edit(t)} 
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium transition-colors duration-200 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 rounded-lg"
+                      disabled={deletingId === t.id}
+                      className={`text-sm font-medium transition-colors duration-200 px-3 py-1 rounded-lg ${
+                        deletingId === t.id
+                          ? 'text-slate-400 bg-slate-100 dark:bg-slate-700 cursor-not-allowed'
+                          : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/30'
+                      }`}
                     >
                       Edit
                     </button>
                     <button 
                       onClick={() => remove(t.id)} 
-                      className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm font-medium transition-colors duration-200 px-3 py-1 bg-red-50 dark:bg-red-900/30 rounded-lg"
+                      disabled={deletingId === t.id}
+                      className={`text-sm font-medium transition-colors duration-200 px-3 py-1 rounded-lg ${
+                        deletingId === t.id
+                          ? 'text-slate-400 bg-slate-100 dark:bg-slate-700 cursor-not-allowed'
+                          : 'text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 bg-red-50 dark:bg-red-900/30'
+                      }`}
                     >
-                      Delete
+                      {deletingId === t.id ? (
+                        <div className="flex items-center space-x-1">
+                          <div className="w-3 h-3 border border-slate-400 border-t-transparent rounded-full animate-spin"></div>
+                          <span>Deleting...</span>
+                        </div>
+                      ) : (
+                        'Delete'
+                      )}
                     </button>
                   </div>
                 </div>
