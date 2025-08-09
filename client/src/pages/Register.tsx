@@ -14,8 +14,12 @@ export default function Register() {
     setError(null);
     setLoading(true);
     try {
-      const { data } = await api.post('/register', { email, password });
+      const { data } = await api.post('/auth/register', { email, password });
       localStorage.setItem('token', data.token);
+      
+      // Dispatch custom event to notify other components about auth change
+      window.dispatchEvent(new Event('authChange'));
+      
       nav('/');
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Registration failed');

@@ -15,10 +15,15 @@ export default function Login() {
     setLoading(true);
     try {
       console.log('Attempting login with:', { email, password: '***' });
-      const { data } = await api.post('/login', { email, password });
+      const { data } = await api.post('/auth/login', { email, password });
       console.log('Login response:', data);
       localStorage.setItem('token', data.token);
-      console.log('Token saved, navigating to dashboard...');
+      console.log('Token saved, triggering auth change event...');
+      
+      // Dispatch custom event to notify other components about auth change
+      window.dispatchEvent(new Event('authChange'));
+      
+      console.log('Navigating to dashboard...');
       nav('/');
     } catch (err: any) {
       console.error('Login error:', err);

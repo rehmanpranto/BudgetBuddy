@@ -1,4 +1,5 @@
 import { Route, Routes, Navigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { CurrencyProvider } from '../contexts/CurrencyContext';
@@ -14,13 +15,46 @@ import ResetPassword from './ResetPassword';
 import Test from './Test';
 
 function useAuth() {
-  const token = localStorage.getItem('token');
-  console.log('Auth check - token exists:', !!token); // Debug log
-  console.log('Current URL:', window.location.href); // Debug log
-  if (token) {
-    console.log('Token preview:', token.substring(0, 20) + '...');
-  }
-  return { isAuthed: !!token };
+  const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+    // Function to check authentication status
+    const checkAuth = () => {
+      const token = localStorage.getItem('token');
+      const authStatus = !!token;
+      console.log('Auth check - token exists:', authStatus); // Debug log
+      console.log('Current URL:', window.location.href); // Debug log
+      if (token) {
+        console.log('Token preview:', token.substring(0, 20) + '...');
+      }
+      setIsAuthed(authStatus);
+    };
+
+    // Check initially
+    checkAuth();
+
+    // Listen for storage changes (when token is added/removed)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'token') {
+        checkAuth();
+      }
+    };
+
+    // Listen for custom events (for same-tab changes)
+    const handleAuthChange = () => {
+      checkAuth();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('authChange', handleAuthChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('authChange', handleAuthChange);
+    };
+  }, []);
+
+  return { isAuthed };
 }
 
 export default function App() {
@@ -60,7 +94,11 @@ export default function App() {
                       <CurrencySelector />
                     </div>
                     <button 
-                      onClick={() => { localStorage.removeItem('token'); location.href = '/login'; }} 
+                      onClick={() => { 
+                        localStorage.removeItem('token'); 
+                        window.dispatchEvent(new Event('authChange'));
+                        location.href = '/login'; 
+                      }} 
                       className="px-2 py-1.5 sm:px-6 sm:py-2.5 gradient-primary text-white rounded-lg sm:rounded-xl font-medium text-xs sm:text-base shadow-lg shadow-blue-500/25 transition-all duration-200 hover:shadow-blue-500/40"
                     >
                       <span className="hidden sm:inline">Logout</span>

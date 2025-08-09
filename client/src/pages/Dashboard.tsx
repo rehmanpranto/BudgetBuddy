@@ -67,38 +67,53 @@ export default function Dashboard() {
   }
 
   async function remove(id: string) {
+    console.log('Remove function called with ID:', id);
+    console.log('Current token:', localStorage.getItem('token')?.substring(0, 20) + '...');
+    
     if (confirm('Are you sure you want to delete this transaction?')) {
       try {
         setError(null);
         setDeletingId(id);
-        console.log('Deleting transaction:', id);
+        console.log('Starting delete process for transaction:', id);
         
         const response = await api.delete(`/transactions/${id}`);
         console.log('Delete response:', response);
+        console.log('Delete response status:', response.status);
         
         await load();
-        console.log('Transaction deleted successfully');
+        console.log('Transaction deleted successfully, data reloaded');
       } catch (err: any) {
         console.error('Delete error:', err);
         console.error('Error response:', err?.response);
         console.error('Error status:', err?.response?.status);
         console.error('Error data:', err?.response?.data);
+        console.error('Request headers:', err?.config?.headers);
         
         let errorMessage = 'Failed to delete transaction. Please try again.';
         if (err?.response?.status === 401) {
           errorMessage = 'Authentication failed. Please log in again.';
+          // Redirect to login if auth failed
+          localStorage.removeItem('token');
+          window.dispatchEvent(new Event('authChange'));
+          window.location.href = '/login';
         } else if (err?.response?.status === 404) {
           errorMessage = 'Transaction not found. It may have been already deleted.';
         } else if (err?.response?.status === 403) {
           errorMessage = 'You do not have permission to delete this transaction.';
         } else if (err?.response?.data?.message) {
           errorMessage = err.response.data.message;
+        } else if (err?.message) {
+          errorMessage = err.message;
         }
         
         setError(errorMessage);
+        console.error('Final error message set:', errorMessage);
       } finally {
         setDeletingId(null);
+        console.log('Delete process completed, clearing deletingId');
       }
+    } else {
+      console.log('Delete cancelled by user');
     }
   }
 
