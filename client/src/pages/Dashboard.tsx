@@ -5,6 +5,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, 
 import { useCurrency } from '../contexts/CurrencyContext';
 import { formatCurrency, getCurrencySymbol } from '../utils/currency';
 import LoadingSpinner, { SkeletonCard, SkeletonTable } from '../components/LoadingSpinner';
+import AIInsights from '../components/AIInsights';
+import AIFinancialAdvisor from '../components/AIFinancialAdvisor';
+import { deepseekAI } from '../services/deepseekAI';
 
 type Tx = { id: string; type: 'income'|'expense'; amount: number; category: string; date: string; note?: string };
 
@@ -22,6 +25,8 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [aiSuggesting, setAiSuggesting] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState<string | null>(null);
 
   async function load() {
     try {
@@ -114,6 +119,27 @@ export default function Dashboard() {
       }
     } else {
       console.log('Delete cancelled by user');
+    }
+  }
+
+  async function getAICategorySuggestion() {
+    if (!form.note?.trim() || !form.amount) return;
+    
+    setAiSuggesting(true);
+    try {
+      const suggestion = await deepseekAI.categorizeTransaction(form.note, Number(form.amount));
+      setAiSuggestion(suggestion);
+    } catch (err) {
+      console.error('Failed to get AI suggestion:', err);
+    } finally {
+      setAiSuggesting(false);
+    }
+  }
+
+  function applyAISuggestion() {
+    if (aiSuggestion) {
+      setForm(f => ({ ...f, category: aiSuggestion }));
+      setAiSuggestion(null);
     }
   }
 
@@ -259,6 +285,16 @@ export default function Dashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
+      </section>
+
+      {/* AI-Powered Features Section */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
+        <AIInsights transactions={txs} summary={summary} />
+        <AIFinancialAdvisor 
+          currentSavings={summary.balance} 
+          monthlyIncome={summary.income} 
+          monthlyExpenses={summary.expenses} 
+        />
       </section>
 
       {/* Transactions and Form Section */}
@@ -453,6 +489,42 @@ export default function Dashboard() {
                 placeholder="Add a note..." 
                 className="w-full px-3 py-3 glass rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
+              
+              {/* AI Category Suggestion */}
+              {form.note?.trim() && form.amount && (
+                <div className="mt-2 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={getAICategorySuggestion}
+                    disabled={aiSuggesting}
+                    className="text-xs px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors disabled:opacity-50 flex items-center space-x-1"
+                  >
+                    <span>🤖</span>
+                    <span>{aiSuggesting ? 'Analyzing...' : 'Suggest Category'}</span>
+                  </button>
+                  
+                  {aiSuggestion && aiSuggestion !== form.category && (
+                    <div className="flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-lg border border-blue-200 dark:border-blue-700">
+                      <span className="text-xs text-blue-600 dark:text-blue-400">AI suggests:</span>
+                      <span className="text-xs font-medium text-blue-700 dark:text-blue-300">{aiSuggestion}</span>
+                      <button
+                        type="button"
+                        onClick={applyAISuggestion}
+                        className="text-xs px-2 py-0.5 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      >
+                        Apply
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setAiSuggestion(null)}
+                        className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {error && (
